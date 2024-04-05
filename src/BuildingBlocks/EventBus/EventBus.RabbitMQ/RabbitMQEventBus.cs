@@ -63,6 +63,9 @@ public class RabbitMQEventBus : EventBusBase
 
         policy.Execute(() =>
         {
+            // Publish sırasında ilgili Exchange'e herhangi bir Queue bind edilmemişse, puslih edilen mesaj boşa düşecektir.
+            // Bu mesajlara ulaşmak istersek RabbitMQ ayrıca bir Api sağlamaktadır.
+
             channel.BasicPublish(exchange: _config.DefaultTopicName,
                                  routingKey: eventName,
                                  mandatory: true,

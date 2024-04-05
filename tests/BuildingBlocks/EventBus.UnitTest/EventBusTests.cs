@@ -69,7 +69,7 @@ public class EventBusTests
     [TestMethod]
     public void Consume_OrderCreatedIntegrationEvent_Messages_On_RabbitMQ_Successfully()
     {
-        _services.AddSingleton<OrderCreatedIntegrationEventHandler>();
+        _services.AddTransient<OrderCreatedIntegrationEventHandler>();
 
         _services.AddSingleton<IEventBus>(sp =>
         {

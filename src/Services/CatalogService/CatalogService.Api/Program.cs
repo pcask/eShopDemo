@@ -3,7 +3,6 @@ using CatalogService.Api.Infrastructure;
 using CatalogService.Api.Infrastructure.Context;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
-using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
