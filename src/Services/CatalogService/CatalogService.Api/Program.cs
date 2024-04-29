@@ -24,8 +24,17 @@ builder.Services.Configure<CatalogSettings>(builder.Configuration.GetSection("Ca
 // DbContextRegistration için yazdığımız extension method;
 builder.Services.ConfigureDbContext(builder.Configuration);
 
+// ConsulClient'ı IoC container'a ekleyelim.
+builder.Services.ConfigureConsul(builder.Configuration);
+
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 // Statik dosyalarımızın (ürün görselleri) tutulacağı klasörü belirtiyoruz.
 app.UseStaticFiles(new StaticFileOptions
@@ -43,13 +52,8 @@ await app.MigrateDbContext<CatalogContext>(async (context, services) =>
     await new CatalogContextSeed().SeedAsync(context, builder.Environment, logger);
 });
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+// Uygulamayı Consul'a register/deregister ediyoruz;
+app.RegisterWithConsul(app.Lifetime, builder.Configuration);
 
 app.UseHttpsRedirection();
 

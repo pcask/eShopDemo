@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  s_redis:
+    container_name: c_redis
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/data
+      
+    # Specific bir network belirtmediğim için default network'den ayağa kalkacaktır. RedisInsight UI tarafından Redis DB'e bağlanmak için default network'ü inspect ile incele ve atanan ip'yi kullan! 
+
+  s_redisinsight:
+    container_name: c_redisinsight
+    image: redis/redisinsight:latest
+    ports:
+      - 5540:5540
+
+volumes:
+  redis:
+    name: redis

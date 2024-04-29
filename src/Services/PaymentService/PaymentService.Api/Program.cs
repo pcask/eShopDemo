@@ -21,7 +21,7 @@ builder.Services.AddLogging(builder =>
 // Kullanılan eventBus'a bu ServiceProvidor gönderilecek ve ProcessEvent method'unda ServiceProvider içerisinden aşağıdaki handler'a ulaşılacaktır.
 builder.Services.AddTransient<OrderStartedIntegrationEventHandler>();
 
-// Kullanılacak olana EventBus'ı IoC container'a ekliyoruz.
+// Kullanılacak olan EventBus'ı IoC container'a ekliyoruz.
 builder.Services.AddSingleton<IEventBus>(sp =>
 {
     EventBusConfig config = new()
